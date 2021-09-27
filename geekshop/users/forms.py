@@ -73,6 +73,19 @@ class UserRegisterForm(UserCreationForm):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
 
+    def clean_age(self):
+        data= self.cleaned_data['age']
+        if data < 18:
+            raise forms.ValidationError('Вы слишком молоды!')
+        return data
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
+        if email and User.objects.filter(email=email).exclude(username=username).exists():
+            raise forms.ValidationError('Данный Email зарегистрирован.')
+        return email
+
     def save(self, commit=True):
         user = super(UserRegisterForm, self).save()
         user.is_active = False
