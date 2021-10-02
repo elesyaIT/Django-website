@@ -9,19 +9,31 @@ from users.models import User, UserProfile
 
 
 class UserProfileForm(UserChangeForm):
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4',
-                                                               'placeholder': 'Ведите имя'}))
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4',
-                                                              'placeholder': 'Ведите Фамилию'}))
-    age = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control py-4',
-                                                              'readonly': True}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control py-4', 'readonly': True}))
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'readonly': True}))
-    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}), required=False)
+    first_name = forms.CharField(widget=forms.TextInput())
+    last_name = forms.CharField(widget=forms.TextInput())
+    age = forms.IntegerField(widget=forms.NumberInput(attrs={'readonly': True}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'readonly': True}))
+    username = forms.CharField(widget=forms.TextInput(attrs={'readonly': True}))
+    image = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = User
         fields = ('username', 'email', 'first_name', 'last_name','age', 'image')
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
+        self.fields['email'].widget.attrs['placeholder'] = 'Ведите эл.почту'
+        self.fields['first_name'].widget.attrs['placeholder'] = 'Введите имя'
+        self.fields['age'].widget.attrs['placeholder'] = 'Введите возраст'
+        self.fields['last_name'].widget.attrs['placeholder'] = 'Ведите фамилию'
+        self.fields['image'].widget.attrs['placeholder'] = 'Добавьте фотографию'
+        for field_name, field in self.fields.items():
+            if field_name != 'image':
+                field.widget.attrs['class'] = 'form-control py-4'
+            else:
+                field.widget.attrs['class'] = 'custom-file-input'
+
 
 
     # def clean_image(self):
@@ -53,6 +65,7 @@ class UserRegisterForm(UserCreationForm):
     email = forms.CharField(widget=forms.EmailInput())
     first_name = forms.CharField(widget=forms.TextInput())
     age = forms.IntegerField(widget=forms.NumberInput())
+
     last_name = forms.CharField(widget=forms.TextInput())
     password1 = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
@@ -72,6 +85,7 @@ class UserRegisterForm(UserCreationForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control py-4'
+
 
     def clean_age(self):
         data= self.cleaned_data['age']

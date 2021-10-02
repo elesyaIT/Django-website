@@ -11,8 +11,8 @@
             <div class="alert alert-warning alert-dismissible fade show" role="alert"
                  style="margin-top: 50px;">
                 {% for error in form.errors.values %}
-                            {{ error }}
-                            {% endfor %}
+                    {{ error }}
+                {% endfor %}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -37,11 +37,11 @@
                                 {{ form.last_name }}
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="{{ form.age.id_for_label }}">Возраст</label>
-                                {{ form.age }}
-                            </div>
+                        <div class="col-md-12">
+                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес
+                                электронной
+                                почты</label>
+                            {{ form.email }}
                         </div>
                     </div>
                     <div class="form-row">
@@ -50,10 +50,10 @@
                             {{ form.username }}
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Адрес
-                                электронной
-                                почты</label>
-                            {{ form.email }}
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.age.id_for_label }}">Возраст</label>
+                                {{ form.age }}
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">

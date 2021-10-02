@@ -38,7 +38,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             if send_verify_link(user):
-                messages.success(request, 'Вы успешно зарегистрировались')
+                messages.success(request, 'Вы успешно зарегистрировались. Для активации аккаунта, пройдите по ссылке на почте.')
             return HttpResponseRedirect(reverse('users:login'))
     else:
         form = UserRegisterForm()
