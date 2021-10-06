@@ -3,10 +3,13 @@ from django.urls import path
 
 app_name = 'orders'
 
-# from baskets.views import baskets_add, basket_remove, basket_edit
+from .views import OrderCreate, OrderList, OrderUpdate, OrderRead, OrderDelete, order_forming_complete
 
 urlpatterns = [
-    # path('baskets_add/<int:id>', baskets_add, name='baskets_add'),
-    # path('delete/<int:id>', basket_remove, name='basket_remove'),
-    # path('edit/<int:id>/<int:quantity>/', basket_edit, name='basket_edit'),
+    path('', OrderList.as_view(), name='list'),
+    path('create/', OrderCreate.as_view(), name='create'),
+    path('read/<int:pk>/', OrderRead.as_view(), name='read'),
+    path('update/<int:pk>/', OrderUpdate.as_view(), name='update'),
+    path('delete/<int:pk>/', OrderDelete.as_view(), name='delete'),
+    path('forming-complete/<int:pk>/', order_forming_complete, name='forming_complete'),
 ]

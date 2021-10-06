@@ -12,7 +12,7 @@ JSON_PATH = 'products/fixtures'
 
 
 def load_from_json(file_name):
-    with open(file_name, mode='r', encoding='windows-1251') as infile:
+    with open(file_name, mode='r', encoding='utf-8') as infile:
 
         return json.load(infile)
 
@@ -28,7 +28,7 @@ class Command(BaseCommand):
             new_category = ProductsCategory(**cat)
             new_category.save()
 
-        products = load_from_json('products/fixtures/products.json')
+        products = load_from_json('products/fixtures/good.json')
 
         Product.objects.all().delete()
         for product in products:
