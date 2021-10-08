@@ -156,6 +156,7 @@ EMAIL_FILE_PATH = 'tmp/emails/'
 # EMAIL_HOST_USER,EMAIL_HOST_PASSWORD = None,None
 
 LOGIN_ERROR_URL = '/'
+LOGIN_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.vk.VKOAuth2',

@@ -1,14 +1,18 @@
+import os
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-import os
 import json
 
 from django.views.generic import DetailView
-from products.models import Product,ProductsCategory
+from products.models import Product, ProductsCategory
+
+from django.views.generic.list import ListView
 
 MODULE_DIR = os.path.dirname(__file__)
+
 
 # Create your views here.
 # Контролер - функция
@@ -18,22 +22,32 @@ def index(request):
     return render(request, 'products/index.html', context)
 
 
-def products(request,id=None,page=1):
+# def products(request,id=None,page=1):
+#
+#     products = Product.objects.filter(category_id = id) if id != None else Product.objects.all()
+#     paginator = Paginator(products,per_page=3)
+#     try:
+#         products_paginator = paginator.page(page)
+#     except PageNotAnInteger:
+#         products_paginator = paginator.page(1)
+#     except EmptyPage:
+#         products_paginator = paginator.page(paginator.num_pages)
+#
+#     context = {'title': 'Каталог',
+#                'category':  ProductsCategory.objects.all(),
+#                }
+#     context['products'] = products_paginator
+#     return render(request, 'products/products.html', context)
 
-    products = Product.objects.filter(category_id = id) if id != None else Product.objects.all()
-    paginator = Paginator(products,per_page=3)
-    try:
-        products_paginator = paginator.page(page)
-    except PageNotAnInteger:
-        products_paginator = paginator.page(1)
-    except EmptyPage:
-        products_paginator = paginator.page(paginator.num_pages)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'products/products.html'
+    paginate_by = 3
 
-    context = {'title': 'Каталог',
-               'category':  ProductsCategory.objects.all(),
-               }
-    context['products'] = products_paginator
-    return render(request, 'products/products.html', context)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['title'] = 'Каталог'
+        return context
 
 
 class ProductDetail(DetailView):
