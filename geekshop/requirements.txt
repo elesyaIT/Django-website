@@ -9,6 +9,8 @@ data==0.4
 decorator==5.1.0
 defusedxml==0.7.1
 Django==3.2.7
+django-debug-toolbar==3.2.2
+django-debug-toolbar-template-profiler==2.0.2
 funcsigs==1.0.2
 idna==3.2
 imaplib2==3.6
@@ -31,3 +33,4 @@ social-auth-app-django==5.0.0
 social-auth-core==4.1.0
 sqlparse==0.4.2
 urllib3==1.26.7
+wrapt==1.13.2
