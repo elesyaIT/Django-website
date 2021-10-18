@@ -95,5 +95,6 @@ class ProductDetail(DetailView):
     def get_context_data(self, category_id=None, *args, **kwargs):
         """Добавляем список категорий для вывода сайдбара с категориями на странице каталога"""
         context = super().get_context_data()
+        context['product'] = get_product(self.kwargs.get('pk'))
         context['categories'] = ProductsCategory.objects.all()
         return context
