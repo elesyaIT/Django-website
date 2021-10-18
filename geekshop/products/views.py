@@ -1,11 +1,10 @@
 import os
-from django.conf import settings
+
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, get_object_or_404
+
 import json
-from django.core.cache import cache
 
 from django.views.generic import DetailView
 from products.models import Product, ProductsCategory
@@ -14,42 +13,9 @@ from django.views.generic.list import ListView
 
 MODULE_DIR = os.path.dirname(__file__)
 
-def get_links_category():
-    if settings.LOW_CACHE:
-        key = 'links_category'
-        links_category = cache.get(key)
 
-        if links_category is None:
-            links_category = ProductsCategory.objects.filter(is_active=True)
-            cache.set(key, links_category)
-        return links_category
-    else:
-        return ProductsCategory.objects.filter(is_active=True)
-
-def get_product(pk):
-    if settings.LOW_CACHE:
-        key = f'product{pk}'
-        product = cache.get(key)
-
-        if product is None:
-            product = get_object_or_404(Product,pk=pk)
-            cache.set(key, product)
-        return product
-    else:
-        return get_object_or_404(Product,pk=pk)
-
-
-def get_links_product():
-    if settings.LOW_CACHE:
-        key = 'links_product'
-        links_product = cache.get(key)
-
-        if links_product is None:
-            links_product = Product.objects.filter(is_active=True).select_related()
-            cache.set(key, links_product)
-        return links_product
-    else:
-        return Product.objects.filter(is_active=True).select_related()
+# Create your views here.
+# Контролер - функция
 
 def index(request):
     context = {'title': 'GeekShop'}
