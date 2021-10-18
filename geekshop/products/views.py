@@ -179,16 +179,16 @@ def index(request):
 #     return render(request, 'products/products.html', context)
 
 
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = 'products/products.html'
-#     paginate_by = 3
-#
-#
-#     def get_context_data(self, *args, **kwargs):
-#         context = super(ProductListView, self).get_context_data(**kwargs)
-#         context['title'] = 'Каталог'
-#         return context
+class ProductListView(ListView):
+    model = Product
+    template_name = 'products/products.html'
+    paginate_by = 3
+
+    @cache_page(3600)
+    def get_context_data(self, *args, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['title'] = 'Каталог'
+        return context
 
 
 class ProductDetail(DetailView):
