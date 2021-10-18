@@ -74,7 +74,7 @@ def index(request):
 #     context['products'] = products_paginator
 #     return render(request, 'products/products.html', context)
 
-@cache_page(3600)
+
 class ProductListView(ListView):
     model = Product
     template_name = 'products/products.html'
