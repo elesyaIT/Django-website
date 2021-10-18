@@ -184,7 +184,7 @@ class ProductListView(ListView):
     template_name = 'products/products.html'
     paginate_by = 3
 
-    @cache_page(3600)
+
     def get_context_data(self, *args, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
         context['title'] = 'Каталог'
