@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.cache import cache
 import json
 
+from django.views.decorators.cache import cache_page
 from django.views.generic import DetailView
 from products.models import Product, ProductsCategory
 
@@ -73,6 +74,7 @@ def index(request):
 #     context['products'] = products_paginator
 #     return render(request, 'products/products.html', context)
 
+@cache_page(3600)
 class ProductListView(ListView):
     model = Product
     template_name = 'products/products.html'
