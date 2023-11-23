@@ -1,4 +1,4 @@
-# Django Website Development
+# Django Website
 
 
 ## Table of Contents
